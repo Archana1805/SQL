@@ -1,0 +1,60 @@
+CREATE TABLE Movies (
+  mov_id INT,
+  mov_name varchar(200),
+  mov_year INT
+);
+CREATE TABLE Artist (
+  id INT,
+  mov_id INT,
+  actor_name varchar(200),
+  actress_name varchar(200)
+   
+);
+CREATE TABLE Director (
+  dir_id INT,
+  dir_name varchar(200)
+  
+);
+
+
+INSERT INTO Movies VALUES (1, 'The Tomorrow War', 2021);
+INSERT INTO Movies VALUES (2, 'Rampage', 2018);
+INSERT INTO Movies VALUES (3, 'The Mysterious Island', 2012);
+INSERT INTO Movies VALUES (4, 'Jurassic World', 2015);
+
+INSERT INTO Artist VALUES (10,1, 'Chis Pratt', 'Yvonne Strahovski');
+INSERT INTO Artist VALUES (20,2, 'Dwayne Johnson', 'Malin Akerman');
+INSERT INTO Artist VALUES (30,3,'Dwayne Johnson', 'Vanessa Hudgens');
+INSERT INTO Artist VALUES (40,4,'Chris Pratt', 'Bryce Dallas Howard');
+
+INSERT INTO Director VALUES (100, 'Chris McKay');
+INSERT INTO Director VALUES (200, 'Brad Peyton');
+INSERT INTO Director VALUES (300, 'Brad Peyton');
+INSERT INTO Director VALUES (400, 'Colin Trevorrow');
+
+SELECT * FROM Movies;
+
+SELECT mov_name, actor_name, actress_name
+FROM Movies
+JOIN Artist 
+  ON Movies.mov_id=Artist.mov_id
+WHERE Artist.mov_id IN (
+SELECT mov_id 
+FROM Movies 
+GROUP BY mov_id HAVING COUNT(*)>=0);
+
+
+
+OUTPUT:
+
+1|The Tomorrow War|2021
+2|Rampage|2018
+3|The Mysterious Island|2012
+4|Jurassic World|2015
+
+
+The Tomorrow War|Chis Pratt|Yvonne Strahovski
+Rampage|Dwayne Johnson|Malin Akerman
+The Mysterious Island|Dwayne Johnson|Vanessa Hudgens
+Jurassic World|Chris Pratt|Bryce Dallas Howard
+
